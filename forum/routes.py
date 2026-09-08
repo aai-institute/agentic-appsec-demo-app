@@ -221,7 +221,7 @@ async def edit_post(
 ):
     post = post_for_view(db, user, post_id)
     ensure_edit(user, post)
-    changes = parse_fields(PostUpdate, await request.form())
+    changes = parse_fields(PostEdit, await request.form())
     apply_update(post, changes)
     db.commit()
     return redirect(f"/posts/{post.id}")
