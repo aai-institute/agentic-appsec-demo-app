@@ -46,4 +46,4 @@ def render_body(body):
 
 
 def render_quote(body):
-    return render_body(body)
+    return Markup(body.replace("\n", "<br>\n"))

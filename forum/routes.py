@@ -221,7 +221,7 @@ async def edit_post(
 ):
     post = post_for_view(db, user, post_id)
     ensure_edit(user, post)
-    changes = parse_fields(PostEdit, await request.form())
+    changes = parse_fields(PostUpdate, await request.form())
     apply_update(post, changes)
     db.commit()
     return redirect(f"/posts/{post.id}")
@@ -307,7 +307,9 @@ def attachment_for_view(db, user, attachment_id):
 def download(
     attachment_id: int, request: Request, user=Depends(current_user), db=Depends(database)
 ):
-    attachment = attachment_for_view(db, user, attachment_id)
+    attachment = db.get(Attachment, attachment_id)
+    if attachment is None:
+        raise HTTPException(404, "Attachment not found.")
     path = original_path(request.app.state.settings, attachment)
     return FileResponse(path, media_type="application/octet-stream", filename=attachment.filename)
 
