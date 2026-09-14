@@ -28,9 +28,20 @@ def original_path(settings, attachment):
     return path
 
 
+def derived_path(root: Path, name: str) -> Path:
+    root = root.resolve()
+    try:
+        candidate = (root / name).resolve()
+        if not str(candidate).startswith(str(root)):
+            raise HTTPException(404, "File not found.")
+        return candidate
+    except (ValueError, OSError):
+        raise HTTPException(404, "File not found.")
+
+
 def preview_path(settings, attachment, variant):
     name = f"{attachment.storage_name}.txt" if not variant else variant
-    path = media_path(settings.media_root, name)
+    path = derived_path(settings.media_root, name)
     if not path.is_file() or path.suffix != ".txt":
         raise HTTPException(404, "Preview not found.")
     # A derivative belongs to the attachment identified in the URL.
