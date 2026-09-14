@@ -3,8 +3,6 @@
 A small community forum: public and private boards, discussions, replies,
 quotes, attachments, and moderation. Original MIT-licensed Python code using
 FastAPI, Jinja2, SQLAlchemy, and SQLite. No frontend build or external services.
-All bundled accounts and content are synthetic. This is a local demonstration
-application, not a production service; do not enter real data or reuse passwords.
 
 ## Run locally
 
@@ -31,7 +29,7 @@ POST forms with session-bound CSRF tokens.
 
 ## Example accounts
 
-Every fixture account uses the local-only password **`commons-demo-2026`**.
+Every fixture account uses the password **`commons-demo-2026`**.
 
 | Username | Role | Private board membership |
 | --- | --- | --- |
@@ -95,4 +93,4 @@ Tests use temporary databases and uploads. The application factory is
 `forum.main.create_app`; the CLI initializes fixtures. `forum/policy.py`
 describes board/content permissions, `security.py` handles sessions and CSRF,
 and `storage.py` handles attachment files. The schema is created on initialization;
-after changing it, reset this disposable demonstration database.
+after changing it, reset the database.
