@@ -24,6 +24,10 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["forum"]
 
+# Resolve only releases at least a week old, independent of any global uv config.
+[tool.uv]
+exclude-newer = "7 days"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
